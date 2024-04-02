@@ -1,5 +1,4 @@
 import React from 'react';
-
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
@@ -8,12 +7,12 @@ class Searchbar extends React.Component {
     };
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.query);
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({ query: e.target.value });
   };
 

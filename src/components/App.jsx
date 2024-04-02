@@ -27,9 +27,9 @@ class App extends React.Component {
         `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
       );
       const newImages = response.data.hits.filter(
-        (image) => !images.some((img) => img.id === image.id)
+        image => !images.some(img => img.id === image.id)
       );
-      this.setState((prevState) => ({
+      this.setState(prevState => ({
         images: [...prevState.images, ...newImages],
       }));
     } catch (error) {
@@ -39,21 +39,24 @@ class App extends React.Component {
     }
   };
 
-  handleSearch = (query) => {
+  handleSearch = query => {
     this.setState({ query, page: 1, images: [] }, () => {
       this.fetchImages();
     });
   };
 
   handleLoadMore = () => {
-    this.setState((prevState) => ({ page: prevState.page + 1 }), () => {
-      this.fetchImages();
-    });
+    this.setState(
+      prevState => ({ page: prevState.page + 1 }),
+      () => {
+        this.fetchImages();
+      }
+    );
   };
 
-  openModal = (imageId) => {
+  openModal = imageId => {
     const { images } = this.state;
-    const selectedImage = images.find((image) => image.id === imageId);
+    const selectedImage = images.find(image => image.id === imageId);
     this.setState({ selectedImage });
   };
 
@@ -75,8 +78,15 @@ class App extends React.Component {
       <div>
         <Searchbar onSubmit={this.handleSearch} />
         <ImageGallery images={images} openModal={this.openModal} />
-        {images.length > 0 && <Button onClick={this.handleLoadMore} isLoading={isLoading} />}
-        {selectedImage && <Modal imageUrl={selectedImage.largeImageURL} onClose={this.closeModal} />}
+        {images.length > 0 && (
+          <Button onClick={this.handleLoadMore} isLoading={isLoading} />
+        )}
+        {selectedImage && (
+          <Modal
+            imageUrl={selectedImage.largeImageURL}
+            onClose={this.closeModal}
+          />
+        )}
       </div>
     );
   }
